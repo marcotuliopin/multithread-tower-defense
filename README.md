@@ -36,7 +36,10 @@ When we need to receive a response from the server we check the type of the rece
 
 To execute communication with multiple servers, we use multithreading from the threading library. We create a different thread to communicate with each server (each thread represents a river), and we perform communication simultaneously. Except for the choice of which cannon will shoot at which river (which could generate a race condition between different rivers), the other processes are performed in parallel by the different threads. In this scenario, all communications with the server are done in parallel.
 
-At key parts of the program, we create a barrier so that all threads wait for the others. These parts are: after the creation and authentication of the servers, after requesting the positioning of the cannons, then check in an ordered manner which boats they can shoot at, verifying if the boat is still alive and if so, shooting at it. In this way, we always aim to shoot at the most advanced boat, eliminating the risk of overshooting.
+At key parts of the program, we create a barrier so that all threads wait for the others. These parts are: after the creation and authentication of the servers, after requesting the positioning of the cannons, and at the beginning and end of the turns.
+
+## Target Selection Strategy
+For the choice of the target of each of the available cannons during a round we use our shoot function, in it we iterate over the bridges present in a river, on each of these bridges we see the cannons present and the boats that are passing through this bridge, the cannons then check in an ordered manner which boats they can shoot at, verifying if the boat is still alive and if so, shooting at it. In this way, we always aim to shoot at the most advanced boat, eliminating the risk of overshooting.
 
 ## Used Commands and Execution Time
 
@@ -87,8 +90,4 @@ Below we show the statistics for the tests on easy, intermediate and hard diffic
 
 CUNHA, Ítalo. Computer Networks. (2024). Belo Horizonte: UFMG. Teaching material from the Computer Networks course taught by Professor Ítalo Cunha in the Computer Science course at the Federal University of Minas Gerais.
 
-PETERSON, L., & Davie, B. (2012). Computer Networks: A Systems Approach. Elsevier. Available at: https://github.com/SystemsApproach/book. License: CC BY 4.0 and at the beginning and end of the turns.
-
-## Target Selection Strategy
-
-For the choice of the target of each of the available cannons during a round we use our shoot function, in it we iterate over the bridges present in a river, on each of these bridges we see the cannons present and the boats that are passing through this bridge, the cannons
+PETERSON, L., & Davie, B. (2012). Computer Networks: A Systems Approach. Elsevier. Available at: https://github.com/SystemsApproach/book. License: CC BY 4.0
