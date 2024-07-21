@@ -36,7 +36,58 @@ When we need to receive a response from the server we check the type of the rece
 
 To execute communication with multiple servers, we use multithreading from the threading library. We create a different thread to communicate with each server (each thread represents a river), and we perform communication simultaneously. Except for the choice of which cannon will shoot at which river (which could generate a race condition between different rivers), the other processes are performed in parallel by the different threads. In this scenario, all communications with the server are done in parallel.
 
-At key parts of the program, we create a barrier so that all threads wait for the others. These parts are: after the creation and authentication of the servers, after requesting the positioning of the cannons, and at the beginning and end of the turns.
+At key parts of the program, we create a barrier so that all threads wait for the others. These parts are: after the creation and authentication of the servers, after requesting the positioning of the cannons, then check in an ordered manner which boats they can shoot at, verifying if the boat is still alive and if so, shooting at it. In this way, we always aim to shoot at the most advanced boat, eliminating the risk of overshooting.
+
+## Used Commands and Execution Time
+
+We tested the program with IPv6 and IPv4. The GAS used is as follows: 2021032110:1:fd01eed7baa1eb0a3c06480a303c94cfa2b54e34045a307683e88c69e37955\\d2+3b3ccb9597ef0e57f427b0cde3ae23f1498b7e25c11a639aaefe45ef0eed32d6
+
+Below we show the statistics for the tests on easy, intermediate and hard difficulties, using a timeout of 0.3 seconds:
+
+| **Statistics** | **Value** |
+|---|---|
+| Last Turn | 272 |
+| Ship Moves | 4930 |
+| Shot Received | 1304 |
+| Valid Shots | 1304 |
+| Sunk Ships | 570 |
+| Escaped Ships | 458 |
+| Remaining Life On Escaped Ships | 743 |
+| Runtime | 00:31 |
+
+*Table 1: Game data on easy difficulty.*
+
+| **Statistics** | **Value** |
+|---|---|
+| Last Turn | 272 |
+| Ship Moves | 4630 |
+| Shot Received | 1391 |
+| Valid Shots | 1391 |
+| Sunk Ships | 586 |
+| Escaped Ships | 442 |
+| Remaining Life On Escaped Ships | 719 |
+| Runtime | 01:48 |
+
+*Table 2: Game data on intermediate difficulty.*
+
+| **Statistics** | **Value** |
+|---|---|
+| Last Turn | 272 |
+| Ship Moves | 5305 |
+| Shot Received | 1545 |
+| Valid Shots | 1328 |
+| Sunk Ships | 602 |
+| Escaped Ships | 426 |
+| Remaining Life On Escaped Ships | 692 |
+| Runtime | 13:31 |
+
+*Table 3: Game data on hard difficulty.*
+
+## References
+
+CUNHA, Ítalo. Computer Networks. (2024). Belo Horizonte: UFMG. Teaching material from the Computer Networks course taught by Professor Ítalo Cunha in the Computer Science course at the Federal University of Minas Gerais.
+
+PETERSON, L., & Davie, B. (2012). Computer Networks: A Systems Approach. Elsevier. Available at: https://github.com/SystemsApproach/book. License: CC BY 4.0 and at the beginning and end of the turns.
 
 ## Target Selection Strategy
 
